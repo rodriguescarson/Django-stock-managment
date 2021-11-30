@@ -1,0 +1,163 @@
+{% load crispy_forms_tags %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+    <meta name="generator" content="Jekyll v3.8.6" />
+    <title>Fixed top navbar example · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/navbar-fixed/" />
+
+    <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#563d7c" />
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        /*Align the title to the center of the page*/
+        .table {
+            font-size: 13px;
+            text-align: center;
+            width: 95%;
+            margin: auto;
+        }
+
+        /*Make alternating colors for the table rows*/
+        .table tr:nth-child(odd) {
+            background: #b8cae4;
+        }
+
+        .table tr:nth-child(even) {
+            background: #dae5f4;
+        }
+
+        th {
+            background-color: #337ab7;
+            color: white;
+        }
+
+        .display_table {
+            border-bottom-right-radius: 20px;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 20px;
+            box-shadow: 12px 12px 20px 6px #2e6da4;
+        }
+
+        .header {
+            font-family: helvetica;
+            color: #337ab7;
+            font-size: 50px;
+            text-align: center;
+            width: 100%;
+            text-shadow: 6px 6px 6px #c9c6c6;
+            display: block;
+            font-weight: bolder;
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/navbar-top-fixed.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+
+    <main role="main" class="container">
+        {% if messages %}
+        <ul class="messages" style="  list-style: none;
+    background-color: #2e6da4;
+    color: white;
+    box-shadow: 12px 12px 12px #e61c66;
+    text-align: center;">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="jumbotron">
+            <div class="header">{{header}}</div>
+            <form method='POST' action=''>{% csrf_token %}
+                {{form|crispy}}
+                <input type="submit" value='Search'/>
+            </form>
+            <div class="display_table">
+                <table class='table'>
+                  <thead>
+                    <tr>
+                      <th>COUNT</th>
+                      <th>ID</th>
+                      <th>CATEGORY</th>
+                      <th>ITEM NAME</th>
+                      <th>QUANTITY IN STORE</th>
+                      <th>ISSUE QUANTITY</th>
+                      <th>RECEIVE QUANTITY</th>
+                      <th>RECEIVE BY</th>
+                      <th>ISSUE BY</th>
+                      <th>LAST UPDATED</th>
+                    </tr>
+                  </thead>
+                {% for instance in queryset %}
+                    <tr>
+        
+                      <td>{{forloop.counter}}</td>
+                      <td>{{instance.id}}</td>
+                      <td>{{instance.category}}</td>
+                      <td>{{instance.item_name}}</td>
+                      <td>{{instance.quantity}}</td>
+                      <td>{{instance.issue_quantity}}</td>
+                      <td>{{instance.receive_quantity}}</td>
+                      <td>{{instance.receive_by}}</td>
+                      <td>{{instance.issue_by}}</td>
+                      <td>{{instance.last_updated}}</td>
+                    </tr>
+                {% endfor %}
+              </table>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script>
+        window.jQuery ||
+            document.write(
+                '<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>'
+            );
+    </script>
+    <script src="/docs/4.4/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+    </script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>
